@@ -1,0 +1,104 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Portfolio
+{% endblock %}
+
+{% block main %}
+
+    <div class="mb-3">
+        <h3>Fridge for {{ dorm }}</h3>
+    </div>
+    <div class="hr-container">
+        <hr>
+    </div>
+    <div class="mb-3 d-flex align-items-center justify-content-center">
+        <div style="margin-right: 10px;">If editing, please select which roommate</div>
+        <form>
+            <div>
+                <select class="form-select mx-auto w-auto custom-select" name="roommate">
+                    <option disabled selected>Roommate</option>
+
+                    {% for person in names %}
+                        <option value="{{ person.name }}">{{ person.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="container py-5 text-center">
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-start">Item</th>
+                    <th class="text-end">Quantity</th>
+                    <th class="text-end">Space Taken</th>
+                    <th class="text-end">Roommate</th>
+                    <th class="text-end">Expiration Date</th>
+                    <th class="text-end">Days Left</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in fridge %}
+                    <tr>
+                        <td class="text-start">{{ item.name }}</td>
+                        <td class="text-end">{{ item.quantity }}</td>
+                        <td class="text-end">{{ item.space }}</td>
+                        <td class="text-end">{{ item.roommate }}</td>
+                        <td class="text-end">{{ item.timestamp }}</td>
+                        <td class="text-end">{{ item.days_left }}</td>
+
+                        <td class="text-end">
+                            <form action="/remove" method="post">
+                                <input type="hidden" name="item_id" value="{{ item.id }}">
+                                <button class="btn btn-primary" type="submit">Remove</button>
+                            </form>
+                        </td>
+
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td class="border-0 fw-bold text-end" colspan="5">Remaining Space</td>
+                    <td class="border-0 text-end">{{ space }}</td>
+                </tr>
+                <tr>
+                    <td class="border-0 fw-bold text-end" colspan="5">Expired Items</td>
+                    <td class="border-0 w-bold text-end">{{ expired }}</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+
+<!-- This javascript accounts for the select menu to have its input taken as well despite being in a different form element!-->
+
+    <script>
+        document.querySelectorAll('form').forEach(function(form) {
+
+            form.addEventListener('submit', function(event) {
+
+                event.preventDefault();
+            // Capture the selected value from the dropdown menu and add new input element
+                var dropdownValue = document.querySelector('select').value;
+                var newInput = document.createElement('input');
+
+            // Set the input's value to the selected value from the dropdown menu
+                newInput.value = dropdownValue;
+
+            // Set the input's name to "dropdown" and add it
+                newInput.name = "dropdown";
+                this.appendChild(newInput);
+
+            // Submits
+                this.submit();
+            });
+        });
+    </script>
+
+{% endblock %}
