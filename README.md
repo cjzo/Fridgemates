@@ -1,3 +1,8 @@
+Fridgemates
+
+This is a project that allows roommates to collaboratively manage a shared fridge remotely. Through a single account, users can record and see the history of their fridge. Further documentation details a lower-level overview of the project.
+
+
 This project is broken into a main python file (app.py) that uses Flask and webpage html files found in the templates folder (all ending in .html). Other important files are found etiher in the direct folder that app.py is found in and also the static folder (which contains the css and favicon.ico). The rest of this documentation will go in-depth into the individual programs and html files.
 
 First, each page is an extension (using Jinja) of the layout.html page. This page includes the navbar and other HTML that is repeated through each of the .html files. The back-end database is all located within "fridge.db" and the other related files are found in "helpers.py" and "requirements.txt." The file "helpers.py" includes helper functions that are used within the website not included within app.py and "requirements.txt" is a small text file that includes the packages used within the project. Finally, the folder "flask_session" includes sessions created for the website from Flask.
